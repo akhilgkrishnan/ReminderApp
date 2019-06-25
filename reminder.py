@@ -1,8 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
-import time 
+import datetime 
 import os
-
+from sample import ReminderCheck
 
 try:
     mydb = mysql.connector.connect(
@@ -39,9 +39,15 @@ try:
             print("Remainder Message  = ", row[2])
             print("Remainder Date  = ", row[3])
             print("Remainder Time  = ", row[4], "\n")
-        mycursor.close()      
+
+   
+        
+          
+
 
     print("---Reminder Management System---")
+    
+       
     while True:
         print("=================================")
         print("Select the Choice")
@@ -49,7 +55,8 @@ try:
             "1:Create Reminder\n"
             "2:Update Reminder\n"
             "3:View Reminder\n"
-            "4:Exit"        
+            "4:Live\n"
+            "5:Exit"        
         )
     
         choice = int(input("Enter the Choice :"))
@@ -65,10 +72,13 @@ try:
             reminderView()
             print("View")
         elif(choice==4):
+            ReminderCheck()
+        elif(choice==5):
             break        
         else:
             print("Invalid Choice")
-        remindercheck()
+
+         
 except Error as e :
     print ("Error while connecting to MySQL", e)
 finally:
