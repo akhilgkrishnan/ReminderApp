@@ -10,6 +10,8 @@ mycursor = mydb.cursor()
 #mycursor.execute("CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))")
 
 def reminderCreate():
+    print("Enter the Date (DD/MM/YYY) :")
+    
 def reminderUpdate():
 def reminderView():        
 
@@ -31,8 +33,10 @@ while True:
         reminderCreate()
         print("Create")
     elif(choice==2):
+        def reminderUpdate():
         print("Update")
     elif(choice==3):
+        def reminderView(): 
         print("View")
     elif(choice==4):
         break        
