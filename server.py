@@ -36,7 +36,7 @@ try:
                     print(row)
                     os.system('notify-send "Your Have a Reminder :"'+row[2])
                     break
-            sql = "DELETE FROM reminders WHERE taskdate=%s and tasktime=%s"
+            sql = "DELETE FROM reminders WHERE taskdate<=%s and tasktime<=%s"
             val = (curdate, curtime)
             mycursor.execute(sql,val)
             mydb.commit()
