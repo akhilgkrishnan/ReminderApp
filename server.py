@@ -12,7 +12,8 @@ try:
         database="sample"
     )
     mycursor = mydb.cursor()
-    #mycursor.execute("CREATE TABLE reminder (createdtimestamp TIMESTAMP, taskname VARCHAR(100),taskmsg VARCHAR(255),taskdate DATE,tasktime TIME)")
+    mycursor.execute("CREATE TABLE reminders (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,createdtimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, taskname VARCHAR(100),taskmsg VARCHAR(255),taskdate DATE,tasktime TIME)")
+
 
    
         
@@ -24,24 +25,26 @@ try:
             curdate = currentDT.strftime("%Y-%m-%d")
             curtime = currentDT.strftime("%H:%M:%S")
             
-            sql = "SELECT * FROM reminder WHERE taskdate = %s and  tasktime = %s"
-            val = (curdate, curtime)
+            sql = "SELECT * FROM reminders WHERE taskdate = %s and  tasktime = %s"
+            val = (curdate, curtime )
             mycursor.execute(sql,val)
             checkRem = mycursor.fetchall()
             
             if(mycursor.rowcount==1):
                 for row in checkRem:
-                    print("You have a reminder "+row[1]+" on "+str(row[3])+" at "+str(row[4]))
-                    
-                    os.system('notify-send "Your Have a Reminder :"'+row[1])
+                    print("You have a reminder "+row[2]+" on "+str(row[4])+" at "+str(row[5]))
+                    print(row)
+                    os.system('notify-send "Your Have a Reminder :"'+row[2])
                     break
-                sql = "DELETE  FROM reminder WHERE taskdate = %s and  tasktime = %s"
-                val = (curdate, curtime)
-                mycursor.execute(sql,val)
-                mydb.commit()
-       
+            sql = "DELETE FROM reminders WHERE taskdate=%s and tasktime=%s"
+            val = (curdate, curtime)
+            mycursor.execute(sql,val)
+            mydb.commit()
+
+    ReminderCheck()   
             
 except Error as e :
     print ("Error while connecting to MySQL", e)
+
 
       

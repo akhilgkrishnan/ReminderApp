@@ -2,45 +2,100 @@ import mysql.connector
 from mysql.connector import Error
 import datetime 
 import os
-from sample import ReminderCheck
+#from server import ReminderCheck
 
 try:
+    #Create connection to the mysql database
     mydb = mysql.connector.connect(
-        host="localhost",
-        user="reminder",
-        passwd="akhilgk",
-        database="sample"
+        host="localhost",#hostname
+        user="reminder",#username
+        passwd="akhilgk",#password
+        database="sample" #Database name
     )
     mycursor = mydb.cursor()
-    #mycursor.execute("CREATE TABLE reminder (createdtimestamp TIMESTAMP, taskname VARCHAR(100),taskmsg VARCHAR(255),taskdate DATE,tasktime TIME)")
 
+    #Function for creating reminder
     def reminderCreate():
         print("======Add New Reminder====")
         taskname = input("Enter the Task Name :")
         taskmsg = input("Enter the Task Message :")
         taskdate =input("Enter the Task Date (YY-MM-DD) :")
-        tasktime =input("Enter the Time Time (HH:MM:SS) :")
-        sql= "INSERT INTO reminder (taskname,taskmsg,taskdate,tasktime) values (%s,%s,%s,%s)"
+        tasktime =input("Enter the Task Time (HH:MM:SS) :")
+        #insert the user entered datas to the database
+        sql= "INSERT INTO reminders (taskname,taskmsg,taskdate,tasktime) values (%s,%s,%s,%s)"
         val = (taskname,taskmsg,taskdate,tasktime)
         mycursor.execute(sql,val)
         mydb.commit()
-        os.system('notify-send "You have a reminder"'+taskname) 
+       
+        os.system('notify-send "You set a reminder "'+taskname) 
 
 
   
     
-    #def reminderUpdate():
-    def reminderView():
-        mycursor.execute("SELECT * FROM reminder")
+    def reminderUpdate():
+        print("======Reminder Update======")
+        
+        
+        reminderView()
+        
+        remid = input("Enter the reminder ID you want to Update :")
+        sql = "SELECT * FROM reminders WHERE id = %s"
+        val =(remid, )
+        mycursor.execute(sql,val)
         myresult = mycursor.fetchall()
-        for row in myresult:
-            print("==========================================")
-            print("Reminder Created Timestamp = ", row[0], )
-            print("Remainder Name = ", row[1])
-            print("Remainder Message  = ", row[2])
-            print("Remainder Date  = ", row[3])
-            print("Remainder Time  = ", row[4], "\n")
-            print("==========================================")    
+        if(mycursor.rowcount==1):
+            taskname = input("Enter the new  Name :")
+            taskmsg = input("Enter the new Reminder Message :")
+            taskdate =input("Enter the new Task Date (YY-MM-DD) :")
+            tasktime =input("Enter the new Time (HH:MM:SS) :")
+            sqlup = "UPDATE reminders SET taskname=%s,taskmsg=%s,taskdate=%s,tasktime=%s WHERE id=%s"
+            #UPDATE reminders SET taskname='POda Akhil',taskmsg='Hello',taskdate='19-06-28',tasktime='10:51:10';
+
+            valup = (taskname,taskmsg,taskdate,tasktime,remid)
+            mycursor.execute(sqlup,valup)
+            mydb.commit()
+            sqlupres = "SELECT * FROM reminder where id =%s"
+            valupres = (remid, )
+            mycursor.execute(sqlupres,valupres)
+            
+            update = mycursor.fetchall()
+            print("The Reminder id ",remid+" Successfully Updated")
+            print("Update Reminder is :")
+            for row in update:
+                print("==========================================")
+                print("Reminder ID =",row[0])
+                print("Reminder Created Timestamp = ", row[1], )
+                print("Remainder Name = ", row[2])
+                print("Remainder Message  = ", row[3])
+                print("Remainder Date  = ", row[4])
+                print("Remainder Time  = ", row[5], "\n")
+                print("==========================================`") 
+        else:
+            print("Please Enter Valid ID")
+            reminderUpdate()    
+    #Funtion for viewing the reminder
+    def reminderView():
+        currentDT = datetime.datetime.now()
+        curdate = currentDT.strftime("%Y-%m-%d")
+        curtime = currentDT.strftime("%H:%M:%S")
+        sql ="SELECT * FROM reminders WHERE taskdate >= '19-06-26'"
+        #val = (curdate, )
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        if(mycursor.rowcount<1):
+            print("No Reminder Found")
+            
+        else:
+               
+            for row in myresult:
+                print("==========================================")
+                print("Reminder ID =",row[0])
+                print("Reminder Created Timestamp = ", row[1], )
+                print("Remainder Name = ", row[2])
+                print("Remainder Message  = ", row[3])
+                print("Remainder Date  = ", row[4])
+                print("Remainder Time  = ", row[5], "\n")
+                print("==========================================`")    
 
    
         
@@ -57,8 +112,8 @@ try:
             "1:Create Reminder\n"
             "2:Update Reminder\n"
             "3:View Upcomming Reminder\n"
-            "4:Live\n"
-            "5:Exit"        
+            
+            "4:Exit"        
         )
     
         choice = int(input("Enter the Choice :"))
@@ -68,14 +123,15 @@ try:
             reminderCreate()
             print("New Reminder added Successfully")
         elif(choice==2):
-            #reminderUpdate():
-            print("Update")
+            reminderUpdate()
+            
         elif(choice==3):
+            print("===Reminder Records ===")
             reminderView()
-            print("View")
+            
+        
+            
         elif(choice==4):
-            ReminderCheck()
-        elif(choice==5):
             break        
         else:
             print("Invalid Choice")
@@ -83,7 +139,7 @@ try:
          
 except Error as e :
     print ("Error while connecting to MySQL", e)
-finally:
+#finally:
     #closing database connection.
     if(mydb.is_connected()):
         mydb.close()

@@ -1,0 +1,2 @@
+mysql-client==0.0.1
+mysql-connector==2.2.9
