@@ -36,8 +36,8 @@ mydb = mysql.connector.connect(
 - run  ` $ python server.py`       
 - without closing the current terminal open a new terminal and run `$python reminder.py`  then you get a choice option like below,
 
-### Reminder Management System
-=================================
+### Reminder Management System-
+
 Select the Choice   
 1:Create Reminder  
 2:Update Reminder    
