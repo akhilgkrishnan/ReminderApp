@@ -75,12 +75,12 @@ try:
             reminderUpdate()    
     #Funtion for viewing the reminder
     def reminderView():
-        currentDT = datetime.datetime.now()
+        currentDT = datetime.datetime.now() #Read current time and date
         curdate = currentDT.strftime("%Y-%m-%d")
         curtime = currentDT.strftime("%H:%M:%S")
-        sql ="SELECT * FROM reminders WHERE taskdate >= '19-06-26'"
-        #val = (curdate, )
-        mycursor.execute(sql)
+        sql ="SELECT * FROM reminders WHERE taskdate >= %s"
+        val = (curdate, )
+        mycursor.execute(sql,val)
         myresult = mycursor.fetchall()
         if(mycursor.rowcount<1):
             print("No Reminder Found")
@@ -139,8 +139,8 @@ try:
          
 except Error as e :
     print ("Error while connecting to MySQL", e)
-#finally:
-    #closing database connection.
+finally:
+    #closing database connection
     if(mydb.is_connected()):
         mydb.close()
         print("MySQL connection is closed")
