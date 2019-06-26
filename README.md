@@ -3,13 +3,27 @@ This is simple Database application for Creating , Updating and Viewing reminder
 
 This app is worked fully based on the command line and it is build in python.
 
+## Prerequisites
 
- It works in both Python2.7 or Python3
+- Python 3.4 or greater
+- pip
+- Virtualenv
+
+## Installing
+```
+$ python3 -m venv reminder && cd reminder
+$ git clone https://github.com/AkhilGKrishnan/ReminderApp.git 
+$ source bin/activate
+$ cd ReminderApp
+$ pip install -r requirement.txt
+
+```
+ 
 
 ## How to Run
 
--: Install libraries : `$ pip install -r requirement.txt`   
--: Change host,user,password according to your mysql server in server.py and reminder.py
+  
+- Change host,user,password according to your mysql server in server.py and reminder.py
 
     mydb = mysql.connector.connect(
         host="localhost", 
@@ -17,11 +31,11 @@ This app is worked fully based on the command line and it is build in python.
         passwd="akhilgk", //Replace akhilgk with your own password
         database="sample" //Add your database name
     )
-3=: Open the terminal    
-4: run  ` $ python server.py`       
-5: without closing the current terminal open a new terminal and run `$python reminder.py`  then you get a choice option like below,
+- Open the terminal    
+- run  ` $ python server.py`       
+- without closing the current terminal open a new terminal and run `$python reminder.py`  then you get a choice option like below,
 
-Reminder Management System
+### Reminder Management System
 =================================
 Select the Choice   
 1:Create Reminder  
@@ -30,8 +44,8 @@ Select the Choice
 4:Exit    
 Enter the Choice :
 
-6: Select appropreate option    
-7: Done
+- Select appropreate option    
+- Done
 
 
 
