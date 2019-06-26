@@ -33,7 +33,7 @@ try:
             if(mycursor.rowcount==1):
                 for row in checkRem:
                     print("You have a reminder "+row[2]+" on "+str(row[4])+" at "+str(row[5]))
-                    print(row)
+                    
                     os.system('notify-send "Your Have a Reminder :"'+row[2])
                     break
             sql = "DELETE FROM reminders WHERE taskdate<=%s and tasktime<=%s"
