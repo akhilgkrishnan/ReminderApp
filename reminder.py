@@ -34,11 +34,13 @@ try:
         mycursor.execute("SELECT * FROM reminder")
         myresult = mycursor.fetchall()
         for row in myresult:
-            print("Reminder Timestamp = ", row[0], )
+            print("==========================================")
+            print("Reminder Created Timestamp = ", row[0], )
             print("Remainder Name = ", row[1])
             print("Remainder Message  = ", row[2])
             print("Remainder Date  = ", row[3])
             print("Remainder Time  = ", row[4], "\n")
+            print("==========================================")    
 
    
         
@@ -54,7 +56,7 @@ try:
         print(
             "1:Create Reminder\n"
             "2:Update Reminder\n"
-            "3:View Reminder\n"
+            "3:View Upcomming Reminder\n"
             "4:Live\n"
             "5:Exit"        
         )

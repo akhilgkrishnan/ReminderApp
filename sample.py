@@ -23,19 +23,24 @@ try:
             currentDT = datetime.datetime.now()
             curdate = currentDT.strftime("%Y-%m-%d")
             curtime = currentDT.strftime("%H:%M:%S")
-            print(curdate)
-            print(curtime)
-        
-            mycursor.execute("SELECT taskname FROM reminder WHERE taskdate 'curdate'")
+            
+            sql = "SELECT * FROM reminder WHERE taskdate = %s and  tasktime = %s"
+            val = (curdate, curtime)
+            mycursor.execute(sql,val)
             checkRem = mycursor.fetchall()
-            print(checkRem)
-            if(mycursor.rowcount>=1):
+            
+            if(mycursor.rowcount==1):
                 for row in checkRem:
-                
-                    os.system('notify-send "You have a reminder"'+row[0])
+                    print("You have a reminder "+row[1]+" on "+str(row[3])+" at "+str(row[4]))
+                    
+                    os.system('notify-send "Your Have a Reminder :"'+row[1])
+                    break
+                sql = "DELETE  FROM reminder WHERE taskdate = %s and  tasktime = %s"
+                val = (curdate, curtime)
+                mycursor.execute(sql,val)
+                mydb.commit()
        
-
-         
+            
 except Error as e :
     print ("Error while connecting to MySQL", e)
 
