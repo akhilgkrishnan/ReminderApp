@@ -21,16 +21,29 @@ try:
         taskmsg = input("Enter the Task Message :")
         taskdate =input("Enter the Task Date (YY-MM-DD) :")
         tasktime =input("Enter the Task Time (HH:MM:SS) :")
-        #insert the user entered datas to the database
-        sql= "INSERT INTO reminders (taskname,taskmsg,taskdate,tasktime) values (%s,%s,%s,%s)"
-        val = (taskname,taskmsg,taskdate,tasktime)
-        mycursor.execute(sql,val)
-        mydb.commit()
-       
-        os.system('notify-send "You set a reminder "'+taskname) 
+        timedateflag = timedatecheck(taskdate,taskdate)
+
+        if(timedateflag==1):
+            print("Date and time already expired")
+        else:    
 
 
-  
+            sql= "INSERT INTO reminders (taskname,taskmsg,taskdate,tasktime) values (%s,%s,%s,%s)"
+            val = (taskname,taskmsg,taskdate,tasktime)
+            #insert the user entered datas to the database
+            mycursor.execute(sql,val)
+            mydb.commit()
+
+            os.system('notify-send "You set a reminder "'+taskname) 
+            print("New Reminder added Successfully")
+
+
+    def timedatecheck(remdate,remtime):
+        currentDT = datetime.datetime.now() #Read current time and date
+        curdate = currentDT.strftime("%Y-%m-%d")
+        curtime = currentDT.strftime("%H:%M:%S")
+        if(remdate < curdate and remtime < curtime ):
+            return 1
     
     def reminderUpdate():
         print("======Reminder Update======")
@@ -48,28 +61,33 @@ try:
             taskmsg = input("Enter the new Reminder Message :")
             taskdate =input("Enter the new Task Date (YY-MM-DD) :")
             tasktime =input("Enter the new Time (HH:MM:SS) :")
-            sqlup = "UPDATE reminders SET taskname=%s,taskmsg=%s,taskdate=%s,tasktime=%s WHERE id=%s"
-            #UPDATE reminders SET taskname='POda Akhil',taskmsg='Hello',taskdate='19-06-28',tasktime='10:51:10';
-
-            valup = (taskname,taskmsg,taskdate,tasktime,remid)
-            mycursor.execute(sqlup,valup)
-            mydb.commit()
-            sqlupres = "SELECT * FROM reminder where id =%s"
-            valupres = (remid, )
-            mycursor.execute(sqlupres,valupres)
-            
-            update = mycursor.fetchall()
-            print("The Reminder id ",remid+" Successfully Updated")
-            print("Update Reminder is :")
-            for row in update:
-                print("==========================================")
-                print("Reminder ID =",row[0])
-                print("Reminder Created Timestamp = ", row[1], )
-                print("Remainder Name = ", row[2])
-                print("Remainder Message  = ", row[3])
-                print("Remainder Date  = ", row[4])
-                print("Remainder Time  = ", row[5], "\n")
-                print("==========================================`") 
+            timedateflag = timedatecheck(taskdate,tasktime)
+            if(timedateflag==1):
+            print("Date and time already expired")
+            else:  
+                sqlup = "UPDATE reminders SET taskname=%s,taskmsg=%s,taskdate=%s,tasktime=%s WHERE id=%s"
+                #UPDATE reminders SET taskname='POda Akhil',taskmsg='Hello',taskdate='19-06-28',tasktime='10:51:10';
+    
+                valup = (taskname,taskmsg,taskdate,tasktime,remid)
+                mycursor.execute(sqlup,valup)
+                mydb.commit()
+                sqlupres = "SELECT * FROM reminder where id =%s"
+                valupres = (remid, )
+                mycursor.execute(sqlupres,valupres)
+                
+                update = mycursor.fetchall()
+                print("===============================================")
+                print("The Reminder id ",remid+" Successfully Updated")
+                print("Update Reminder is :")
+                for row in update:
+                    print("==========================================")
+                    print("Reminder ID =",row[0])
+                    print("Reminder Created Timestamp = ", row[1], )
+                    print("Remainder Name = ", row[2])
+                    print("Remainder Message  = ", row[3])
+                    print("Remainder Date  = ", row[4])
+                    print("Remainder Time  = ", row[5], "\n")
+                    print("==========================================`") 
         else:
             print("Please Enter Valid ID")
             reminderUpdate()    
@@ -121,7 +139,7 @@ try:
 
         if(choice==1):
             reminderCreate()
-            print("New Reminder added Successfully")
+            
         elif(choice==2):
             reminderUpdate()
             
