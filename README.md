@@ -25,13 +25,13 @@ $ pip install -r requirement.txt
   
 - Change host,user,password according to your mysql server in server.py and reminder.py
 ```
-    mydb = mysql.connector.connect(
-        host="localhost", 
-        user="reminder", //Replace reminder with your name
-        passwd="akhilgk", //Replace akhilgk with your own password
-        database="sample" //Add your database name
-    )
-  ```  
+mydb = mysql.connector.connect(
+    host="localhost", 
+    user="reminder", //Replace reminder with your name
+    passwd="akhilgk", //Replace akhilgk with your ownpassword
+    database="sample" //Add your database name
+)
+```  
 - Open the terminal    
 - run  ` $ python server.py`       
 - without closing the current terminal open a new terminal and run `$python reminder.py`  then you get a choice option like below,
