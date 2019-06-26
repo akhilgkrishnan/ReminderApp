@@ -12,7 +12,7 @@ try:
         database="sample"
     )
     mycursor = mydb.cursor()
-    #mycursor.execute("CREATE TABLE reminders (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,createdtimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, taskname VARCHAR(100),taskmsg VARCHAR(255),taskdate DATE,tasktime TIME)")
+    mycursor.execute("CREATE TABLE reminders (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,createdtimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, taskname VARCHAR(100),taskmsg VARCHAR(255),taskdate DATE,tasktime TIME)")
 
 
    

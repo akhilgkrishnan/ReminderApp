@@ -8,6 +8,7 @@ This app is worked fully based on the command line and it is build in python.
 - Python 3.4 or greater
 - pip
 - Virtualenv
+- MySql
 
 ## Installing
 ```
