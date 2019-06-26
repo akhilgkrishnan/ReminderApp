@@ -63,18 +63,18 @@ try:
             tasktime =input("Enter the new Time (HH:MM:SS) :")
             timedateflag = timedatecheck(taskdate,tasktime)
             if(timedateflag==1):
-            print("Date and time already expired")
+                print("Date and time already expired")
             else:  
                 sqlup = "UPDATE reminders SET taskname=%s,taskmsg=%s,taskdate=%s,tasktime=%s WHERE id=%s"
                 #UPDATE reminders SET taskname='POda Akhil',taskmsg='Hello',taskdate='19-06-28',tasktime='10:51:10';
-    
+
                 valup = (taskname,taskmsg,taskdate,tasktime,remid)
                 mycursor.execute(sqlup,valup)
                 mydb.commit()
                 sqlupres = "SELECT * FROM reminder where id =%s"
                 valupres = (remid, )
                 mycursor.execute(sqlupres,valupres)
-                
+
                 update = mycursor.fetchall()
                 print("===============================================")
                 print("The Reminder id ",remid+" Successfully Updated")
