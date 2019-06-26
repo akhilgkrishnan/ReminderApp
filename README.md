@@ -8,7 +8,7 @@ This app is worked fully based on the command line and it is build in python.
 
 ## How to Run
 
--: Install libraries : $ pip install -r requirement.txt   
+-: Install libraries : `$ pip install -r requirement.txt`   
 -: Change host,user,password according to your mysql server in server.py and reminder.py
 
     mydb = mysql.connector.connect(
@@ -19,7 +19,7 @@ This app is worked fully based on the command line and it is build in python.
     )
 3=: Open the terminal    
 4: run  ` $ python server.py`       
-5: without closing the current terminal open a new terminal and run "python reminder.py" then you get a choice option like below,
+5: without closing the current terminal open a new terminal and run `$python reminder.py`  then you get a choice option like below,
 
 Reminder Management System
 =================================
