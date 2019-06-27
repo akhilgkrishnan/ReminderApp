@@ -33,7 +33,7 @@ try:
             #insert the user entered datas to the database
             mycursor.execute(sql,val)
             mydb.commit()
-            os.system('notify-send "You are set a reminder : ' + taskname + ' on ' + taskdate + 'at' + tasktime + '"') 
+            os.system('notify-send "You are set a reminder : ' + taskname + ' on ' + taskdate + ' at ' + tasktime + '"') 
             
             print("New Reminder added Successfully")
 
