@@ -33,8 +33,8 @@ try:
             #insert the user entered datas to the database
             mycursor.execute(sql,val)
             mydb.commit()
-
-            os.system('notify-send "You set a reminder "'+taskname) 
+            os.system('notify-send "You are set a reminder : ' + taskname + ' on ' + taskdate + 'at' + tasktime + '"') 
+            
             print("New Reminder added Successfully")
 
 
@@ -44,53 +44,66 @@ try:
         curtime = currentDT.strftime("%H:%M:%S")
         if(remdate < curdate and remtime < curtime ):
             return 1
+
+    def checkEmpty():
+        mycursor.execute("SELECT * FROM reminders")
+        temp = mycursor.fetchall()
+        if(mycursor.rowcount==0):
+            return 1
+        else:
+            return 0    
+
     
     def reminderUpdate():
         print("======Reminder Update======")
         
         
         reminderView()
-        
-        remid = input("Enter the reminder ID you want to Update :")
-        sql = "SELECT * FROM reminders WHERE id = %s"
-        val =(remid, )
-        mycursor.execute(sql,val)
-        myresult = mycursor.fetchall()
-        if(mycursor.rowcount==1):
-            taskname = input("Enter the new  Name :")
-            taskmsg = input("Enter the new Reminder Message :")
-            taskdate =input("Enter the new Task Date (YY-MM-DD) :")
-            tasktime =input("Enter the new Time (HH:MM:SS) :")
-            timedateflag = timedatecheck(taskdate,tasktime)
-            if(timedateflag==1):
-                print("Date and time already expired")
-            else:  
-                sqlup = "UPDATE reminders SET taskname=%s,taskmsg=%s,taskdate=%s,tasktime=%s WHERE id=%s"
-                #UPDATE reminders SET taskname='POda Akhil',taskmsg='Hello',taskdate='19-06-28',tasktime='10:51:10';
-
-                valup = (taskname,taskmsg,taskdate,tasktime,remid)
-                mycursor.execute(sqlup,valup)
-                mydb.commit()
-                sqlupres = "SELECT * FROM reminder where id =%s"
-                valupres = (remid, )
-                mycursor.execute(sqlupres,valupres)
-
-                update = mycursor.fetchall()
-                print("===============================================")
-                print("The Reminder id ",remid+" Successfully Updated")
-                print("Update Reminder is :")
-                for row in update:
-                    print("==========================================")
-                    print("Reminder ID =",row[0])
-                    print("Reminder Created Timestamp = ", row[1], )
-                    print("Remainder Name = ", row[2])
-                    print("Remainder Message  = ", row[3])
-                    print("Remainder Date  = ", row[4])
-                    print("Remainder Time  = ", row[5], "\n")
-                    print("==========================================`") 
+        emptyCheck = checkEmpty()
+        if(emptyCheck==1):
+            reminderCreate()
         else:
-            print("Please Enter Valid ID")
-            reminderUpdate()    
+
+            remid = input("Enter the reminder ID you want to Update :")
+            sql = "SELECT * FROM reminders WHERE id = %s"
+            val =(remid, )
+            mycursor.execute(sql,val)
+            myresult = mycursor.fetchall()
+            if(mycursor.rowcount==1):
+                taskname = input("Enter the new  Name :")
+                taskmsg = input("Enter the new Reminder Message :")
+                taskdate =input("Enter the new Task Date (YY-MM-DD) :")
+                tasktime =input("Enter the new Time (HH:MM:SS) :")
+                timedateflag = timedatecheck(taskdate,tasktime)
+                if(timedateflag==1):
+                    print("Date and time already expired")
+                else:  
+                    sqlup = "UPDATE reminders SET taskname=%s,taskmsg=%s,taskdate=%s,tasktime=%s WHERE id=%s"
+                    
+
+                    valup = (taskname,taskmsg,taskdate,tasktime,remid)
+                    mycursor.execute(sqlup,valup)
+                    mydb.commit()
+                    sqlupres = "SELECT * FROM reminder where id =%s"
+                    valupres = (remid, )
+                    mycursor.execute(sqlupres,valupres)
+
+                    update = mycursor.fetchall()
+                    print("===============================================")
+                    print("The Reminder id ",remid+" Successfully Updated")
+                    print("Update Reminder is :")
+                    for row in update:
+                        print("==========================================")
+                        print("Reminder ID =",row[0])
+                        print("Reminder Created Timestamp = ", row[1], )
+                        print("Remainder Name = ", row[2])
+                        print("Remainder Message  = ", row[3])
+                        print("Remainder Date  = ", row[4])
+                        print("Remainder Time  = ", row[5], "\n")
+                        print("==========================================`") 
+            else:
+                print("Please Enter Valid ID")
+                reminderUpdate()    
     #Funtion for viewing the reminder
     def reminderView():
         currentDT = datetime.datetime.now() #Read current time and date
