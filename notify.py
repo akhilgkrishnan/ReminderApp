@@ -28,7 +28,7 @@ try:
         curdate = currentDT.strftime("%Y-%m-%d")
         curtime = currentDT.strftime("%H:%M:%S")
         #Give noutification of all reminders on the user login day
-        mycursor.execute("SELECT * FROM reminders WHERE taskdate = %s and tasktime > %s",(curdate,curtime ))
+        mycursor.execute("SELECT * FROM reminders WHERE taskdate = %s and tasktime > %s ORDER BY tasktime",(curdate,curtime ))
         dayevent = mycursor.fetchall()
         if(mycursor.rowcount==0):
             os.system('notify-send "No Reminders Today!"') 
