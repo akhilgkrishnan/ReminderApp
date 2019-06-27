@@ -16,7 +16,7 @@ try:
 
     #Function for creating reminder
     def reminderCreate():
-        print("======Add New Reminder====")
+        print("========Add New Reminder========")
         taskname = input("Enter the Task Name :")
         taskmsg = input("Enter the Task Message :")
         taskdate =input("Enter the Task Date (YY-MM-DD) :")
