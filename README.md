@@ -24,7 +24,7 @@ $ pip install -r requirement.txt
 ## How to Run
 
   
-- Change host,user,password according to your mysql server in server.py and reminder.py
+- Change host,user,password according to your mysql server in notify.py and reminder.py
 ```
 mydb = mysql.connector.connect(
     host="localhost", 
@@ -34,7 +34,7 @@ mydb = mysql.connector.connect(
 )
 ```  
 - Open the terminal    
-- run  ` $ python server.py`       
+- run  ` $ python notify.py`       
 - without closing the current terminal open a new terminal and run `$python reminder.py`  then you get a choice option like below,
 
 ### Reminder Management System-
