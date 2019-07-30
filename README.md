@@ -49,7 +49,7 @@ Enter the Choice :
 - Select appropreate option    
 - Done
 ## License
-Lincesed under [MIT LICENSE](LICENSE).
+Lincesed under [Apache License 2.0](LICENSE).
 
 
 
